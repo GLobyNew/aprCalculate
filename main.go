@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 )
@@ -30,7 +31,13 @@ func main() {
 		log.Fatalln("invested days can't be 0")
 	}
 
-	apr := ((resVal - initVal) / initVal) * (365 / daysInv) * 100
+	var apr float64
+
+	if daysInv <= 365 {
+		apr = ((resVal - initVal) / initVal) * (365 / daysInv) * 100
+	} else {
+		apr = (math.Pow((resVal / initVal), 365 / daysInv) - 1) * 100
+	}
 
 	fmt.Printf("APR = %.2f%%\n", apr)
 
